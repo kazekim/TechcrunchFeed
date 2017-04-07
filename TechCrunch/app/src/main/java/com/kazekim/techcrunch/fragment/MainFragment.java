@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kazekim.techcrunch.R;
-import com.kazekim.techcrunch.adapter.NewsRecyclerAdapter;
+//import com.kazekim.techcrunch.adapter.NewsRecyclerAdapter;
+import com.kazekim.techcrunch.callback.NewsCallBack;
 import com.kazekim.techcrunch.databinding.FragmentMainBinding;
+import com.kazekim.techcrunch.factory.TCAPIFactory;
+import com.kazekim.techcrunch.model.NewsDao;
+import com.kazekim.techcrunch.utils.JHLog;
 import com.kazekim.techcrunch.viewholder.NewsViewHolder;
 
 import java.util.List;
@@ -27,14 +31,14 @@ public class MainFragment extends Fragment {
      */
 
     private FragmentMainBinding binding;
-    private NewsRecyclerAdapter recyclerAdapter;
-
-    NewsRecyclerAdapter.OnRecyclerViewItemClickedListener listener = new NewsRecyclerAdapter.OnRecyclerViewItemClickedListener() {
-        @Override
-        public void onRecyclerViewItemClicked(NewsViewHolder viewHolder, int position) {
-
-        }
-    };
+//    private NewsRecyclerAdapter recyclerAdapter;
+//
+//    NewsRecyclerAdapter.OnRecyclerViewItemClickedListener listener = new NewsRecyclerAdapter.OnRecyclerViewItemClickedListener() {
+//        @Override
+//        public void onRecyclerViewItemClicked(NewsViewHolder viewHolder, int position) {
+//
+//        }
+//    };
 
     /**
      * Methods
@@ -72,6 +76,7 @@ public class MainFragment extends Fragment {
     @SuppressWarnings("UnusedParameters")
     private void init(Bundle savedInstanceState) {
         // Init Fragment level's variable(s) here
+
     }
 
     @SuppressWarnings("UnusedParameters")
@@ -80,11 +85,29 @@ public class MainFragment extends Fragment {
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
 
-        recyclerAdapter = new NewsRecyclerAdapter(getContext());
-
-        recyclerAdapter.setOnRecyclerViewItemClickedListener(listener);
+//        recyclerAdapter = new NewsRecyclerAdapter(getContext());
+//
+//        recyclerAdapter.setOnRecyclerViewItemClickedListener(listener);
         binding.recyclerView.setHasFixedSize(true);
 
+
+        TCAPIFactory.newsLoadList(new NewsCallBack.NewsListCallBackListener() {
+            @Override
+            public void onNewsListLoadSuccess(NewsCallBack.Mode mode, List<NewsDao> daoList) {
+
+                JHLog.logParser(MainFragment.class, "newsList Size : "+daoList.size());
+            }
+
+            @Override
+            public void onNewsListLoadFail(NewsCallBack.Mode mode, String message) {
+
+            }
+
+            @Override
+            public void onConnectionFail(NewsCallBack.Mode callBack, String message) {
+
+            }
+        });
     }
 
     @Override

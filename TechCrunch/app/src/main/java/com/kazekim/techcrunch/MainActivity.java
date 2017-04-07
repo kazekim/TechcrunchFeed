@@ -8,6 +8,8 @@ import android.os.Bundle;
 import com.crashlytics.android.Crashlytics;
 import com.kazekim.techcrunch.fragment.MainFragment;
 import com.kazekim.techcrunch.databinding.ActivityMainBinding;
+import com.kazekim.techcrunch.helper.JHFragmentHelper;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void openFragment(Fragment fragment)
     {
-        JHFragmentManager.replaceFragmentWithAnimation(this, fragment, fragmentContainerResId);
+        JHFragmentHelper.replaceFragmentWithAnimation(this, fragment, fragmentContainerResId);
     }
 }
